@@ -1,15 +1,18 @@
 import React from 'react';
 import './App.css';
-import ProductList from './features/Product-list/ProductList';
-import Home from './pages/Home';
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link,
 } from "react-router-dom";
+
+
+import Home from './pages/Home';
 import SingupPage from "./pages/SingupPage";
 import LoginPage from "./pages/LoginPage";
+import CartPage from './pages/CartPage';
+import Checkout from './pages/Checkout';
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +25,14 @@ const router = createBrowserRouter([
   {
     path: "/Signup",
     element: <div><SingupPage/></div>,
+  },
+  {
+    path: "/Cart",
+    element: <div><CartPage/></div>,
+  },
+  {
+    path: "/Checkout",
+    element: <div><Checkout/></div>,
   },
 ]);
 
