@@ -11,6 +11,7 @@ import SingupPage from "./pages/SingupPage";
 import LoginPage from "./pages/LoginPage";
 import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
+import ProductDetPage from './pages/ProductDetPage';
 
 
 const router = createBrowserRouter([
@@ -30,9 +31,13 @@ const router = createBrowserRouter([
     path: "/Cart",
     element: <div><CartPage/></div>,
   },
-  {
+  { 
     path: "/Checkout",
     element: <div><Checkout/></div>,
+  },
+  {
+    path: "/ProductDetails",
+    element: <div><ProductDetPage/></div>,
   },
 ]);
 
