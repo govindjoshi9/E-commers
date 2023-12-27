@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -7,8 +7,11 @@ import {
   MinusIcon,
   PlusIcon,
   Squares2X2Icon,
+  StarIcon
 } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {fetchAllProductAsync ,selectAllProduct , fetchAllProductByFilterAsync} from "../ProductSlice";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -20,121 +23,52 @@ const sortOptions = [
 
 const filters = [
   {
-    id: "color",
-    name: "Color",
+    id: "brand",
+    name: "Brand",
     options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
+      { value: "Apple", label: "Apple", checked: false },
+      { value: "HP", label: "HP", checked: false },
+      { value: "Samsung", label: "Samsung", checked: true },
+      { value: "Lenovo", label: "Lenovo", checked: false },
+      { value: "vivo", label: "vivo", checked: false },
+      { value: "oppo", label: "oppo", checked: false },
     ],
   },
   {
     id: "category",
     name: "Category",
     options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
-    ],
-  },
-  {
-    id: "size",
-    name: "Size",
-    options: [
-      { value: "2l", label: "2L", checked: false },
-      { value: "6l", label: "6L", checked: false },
-      { value: "12l", label: "12L", checked: false },
-      { value: "18l", label: "18L", checked: false },
-      { value: "20l", label: "20L", checked: false },
-      { value: "40l", label: "40L", checked: true },
+      { value: "smartphones", label: "smartphones", checked: false },
+      { value: "laptops", label: "laptops", checked: false },
+      { value: "fragrances", label: "fragrances", checked: true },
+      { value: "skincae", label: "skincare", checked: false },
+      { value: "groceries", label: "groceries", checked: false },
+      { value: "home-decoration", label: "home decoration", checked: false },
     ],
   },
 ];
 
-const products = [
-  {
-    id: 1,
-    name: "Earthen Bottle",
-    href: "#",
-    price: "$48",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg",
-    imageAlt:
-      "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-  },
-  {
-    id: 2,
-    name: "Nomad Tumbler",
-    href: "#",
-    price: "$35",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg",
-    imageAlt:
-      "Olive drab green insulated bottle with flared screw lid and flat top.",
-  },
-  {
-    id: 3,
-    name: "Focus Paper Refill",
-    href: "#",
-    price: "$89",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg",
-    imageAlt:
-      "Person using a pen to cross a task off a productivity paper card.",
-  },
-  {
-    id: 4,
-    name: "Machined Mechanical Pencil",
-    href: "#",
-    price: "$35",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg",
-    imageAlt:
-      "Hand holding black machined steel mechanical pencil with brass tip and top.",
-  },
-  {
-    id: 4,
-    name: "Machined Mechanical Pencil",
-    href: "#",
-    price: "$35",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg",
-    imageAlt:
-      "Hand holding black machined steel mechanical pencil with brass tip and top.",
-  },
-  {
-    id: 4,
-    name: "Machined Mechanical Pencil",
-    href: "#",
-    price: "$35",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg",
-    imageAlt:
-      "Hand holding black machined steel mechanical pencil with brass tip and top.",
-  },
-  {
-    id: 4,
-    name: "Machined Mechanical Pencil",
-    href: "#",
-    price: "$35",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg",
-    imageAlt:
-      "Hand holding black machined steel mechanical pencil with brass tip and top.",
-  },
-  // More products...
-];
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function ProductList() {
+  const dispatch = useDispatch();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const products = useSelector(selectAllProduct);
+  const [filter, setfilter] = useState({});
+
+  useEffect(() => {
+    dispatch(fetchAllProductAsync())
+  },[dispatch])
+
+  const handleFilter = (e, section, option) => {
+    const newfilter = { ...filter, [section.id]: option.value };
+    setfilter(newfilter);
+    // console.log(newfilter);
+    dispatch(fetchAllProductByFilterAsync(newfilter));
+    console.log(section.id, option.value)
+  }
 
   return (
     <div className="bg-white">
@@ -284,7 +218,7 @@ export default function ProductList() {
                         <Menu.Item key={option.name}>
                           {({ active }) => (
                             <a
-                              href={option.href}
+                              href={option.thumbnail}
                               className={classNames(
                                 option.current
                                   ? "font-medium text-gray-900"
@@ -372,6 +306,7 @@ export default function ProductList() {
                                   defaultValue={option.value}
                                   type="checkbox"
                                   defaultChecked={option.checked}
+                                  onChange={e=>handleFilter(e,section,option, )}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
@@ -398,32 +333,44 @@ export default function ProductList() {
                       <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                         {products.map((product) => (
                           <Link to={"/ProductDetails"}>
-                            <div key={product.id} className="group relative">
-                              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                            <div key={product.id} className="group relative border-solid border-2 p-2 border-gray-200">
+                              <div className="aspect-h-60 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
                                 <img
-                                  src={product.imageSrc}
-                                  alt={product.imageAlt}
+                                  src={product.thumbnail}
+                                  alt={product.title}
                                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                                 />
                               </div>
                               <div className="mt-4 flex justify-between">
                                 <div>
                                   <h3 className="text-sm text-gray-700">
-                                    <a href={product.href}>
+                                    <a href={product.thumbnail}>
                                       <span
                                         aria-hidden="true"
                                         className="absolute inset-0"
                                       />
-                                      {product.name}
+                                      {product.title}
                                     </a>
                                   </h3>
                                   <p className="mt-1 text-sm text-gray-500">
-                                    {product.color}
+                                    <StarIcon className="w-6 h-6 inline" />
+                                    <span className="align-bottom">
+                                      {product.rating}
+                                    </span>
                                   </p>
                                 </div>
-                                <p className="text-sm font-medium text-gray-900">
-                                  {product.price}
-                                </p>
+                                <div>
+                                  <p className="text-sm font-medium text-gray-900">
+                                    ${" "}
+                                    {Math.round(
+                                      product.price *
+                                        (1 - product.discountPercentage / 100)
+                                    )}
+                                  </p>
+                                  <p className="text-sm line-through font-medium text-gray-400">
+                                    ${product.price}
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </Link>
