@@ -38,8 +38,8 @@ const products = [
 ];
 
 export default function  () {
-  const count = useSelector(selectCount);
-  const dispatch = useDispatch();
+  // const count = useSelector(selectCount);
+  // const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
 
 

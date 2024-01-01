@@ -14,24 +14,106 @@ import { useDispatch, useSelector } from "react-redux";
 import {fetchAllProductAsync ,selectAllProduct , fetchAllProductByFilterAsync} from "../ProductSlice";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Best Rating", sort: "rating", order: "desc", current: false },
+  { name: "Price: Low to High", sort: "price", order: "asc", current: false },
+  { name: "Price: High to Low", sort: "price", order: "desc", current: false },
 ];
 
 const filters = [
   {
     id: "brand",
-    name: "Brand",
+    name: "Brands",
     options: [
       { value: "Apple", label: "Apple", checked: false },
-      { value: "HP", label: "HP", checked: false },
-      { value: "Samsung", label: "Samsung", checked: true },
-      { value: "Lenovo", label: "Lenovo", checked: false },
-      { value: "vivo", label: "vivo", checked: false },
-      { value: "oppo", label: "oppo", checked: false },
+      { value: "Samsung", label: "Samsung", checked: false },
+      { value: "OPPO", label: "OPPO", checked: false },
+      { value: "Huawei", label: "Huawei", checked: false },
+      {
+        value: "Microsoft Surface",
+        label: "Microsoft Surface",
+        checked: false,
+      },
+      { value: "Infinix", label: "Infinix", checked: false },
+      { value: "HP Pavilion", label: "HP Pavilion", checked: false },
+      {
+        value: "Impression of Acqua Di Gio",
+        label: "Impression of Acqua Di Gio",
+        checked: false,
+      },
+      { value: "Royal_Mirage", label: "Royal_Mirage", checked: false },
+      {
+        value: "Fog Scent Xpressio",
+        label: "Fog Scent Xpressio",
+        checked: false,
+      },
+      { value: "Al Munakh", label: "Al Munakh", checked: false },
+      { value: "Lord - Al-Rehab", label: "Lord   Al Rehab", checked: false },
+      { value: "L'Oreal Paris", label: "L'Oreal Paris", checked: false },
+      { value: "Hemani Tea", label: "Hemani Tea", checked: false },
+      { value: "Dermive", label: "Dermive", checked: false },
+      { value: "ROREC White Rice", label: "ROREC White Rice", checked: false },
+      { value: "Fair & Clear", label: "Fair & Clear", checked: false },
+      { value: "Saaf & Khaas", label: "Saaf & Khaas", checked: false },
+      { value: "Bake Parlor Big", label: "Bake Parlor Big", checked: false },
+      {
+        value: "Baking Food Items",
+        label: "Baking Food Items",
+        checked: false,
+      },
+      { value: "fauji", label: "fauji", checked: false },
+      { value: "Dry Rose", label: "Dry Rose", checked: false },
+      { value: "Boho Decor", label: "Boho Decor", checked: false },
+      { value: "Flying Wooden", label: "Flying Wooden", checked: false },
+      { value: "LED Lights", label: "LED Lights", checked: false },
+      { value: "luxury palace", label: "luxury palace", checked: false },
+      { value: "Golden", label: "Golden", checked: false },
+      {
+        value: "Furniture Bed Set",
+        label: "Furniture Bed Set",
+        checked: false,
+      },
+      { value: "Ratttan Outdoor", label: "Ratttan Outdoor", checked: false },
+      { value: "Kitchen Shelf", label: "Kitchen Shelf", checked: false },
+      { value: "Multi Purpose", label: "Multi Purpose", checked: false },
+      { value: "AmnaMart", label: "AmnaMart", checked: false },
+      {
+        value: "Professional Wear",
+        label: "Professional Wear",
+        checked: false,
+      },     
+      {
+        value: "Fashion Jewellery",
+        label: "Fashion Jewellery",
+        checked: false,
+      },
+      { value: "Cuff Butterfly", label: "Cuff Butterfly", checked: false },
+      {
+        value: "Designer Sun Glasses",
+        label: "Designer Sun Glasses",
+        checked: false,
+      },
+      { value: "mastar watch", label: "mastar watch", checked: false },
+      { value: "Car Aux", label: "Car Aux", checked: false },
+      { value: "W1209 DC12V", label: "W1209 DC12V", checked: false },
+      { value: "TC Reusable", label: "TC Reusable", checked: false },
+      { value: "Neon LED Light", label: "Neon LED Light", checked: false },
+      {
+        value: "METRO 70cc Motorcycle - MR70",
+        label: "METRO 70cc Motorcycle   MR70",
+        checked: false,
+      },
+      { value: "BRAVE BULL", label: "BRAVE BULL", checked: false },
+      { value: "shock absorber", label: "shock absorber", checked: false },
+      { value: "JIEPOLLY", label: "JIEPOLLY", checked: false },
+      { value: "Xiangle", label: "Xiangle", checked: false },
+      {
+        value: "lightingbrilliance",
+        label: "lightingbrilliance",
+        checked: false,
+      },
+      { value: "Ifei Home", label: "Ifei Home", checked: false },
+      { value: "DADAWU", label: "DADAWU", checked: false },
+      { value: "YIOSI", label: "YIOSI", checked: false },
     ],
   },
   {
@@ -40,10 +122,24 @@ const filters = [
     options: [
       { value: "smartphones", label: "smartphones", checked: false },
       { value: "laptops", label: "laptops", checked: false },
-      { value: "fragrances", label: "fragrances", checked: true },
-      { value: "skincae", label: "skincare", checked: false },
+      { value: "fragrances", label: "fragrances", checked: false },
+      { value: "skincare", label: "skincare", checked: false },
       { value: "groceries", label: "groceries", checked: false },
       { value: "home-decoration", label: "home decoration", checked: false },
+      { value: "furniture", label: "furniture", checked: false },
+      { value: "tops", label: "tops", checked: false },
+      { value: "womens-dresses", label: "womens dresses", checked: false },
+      { value: "womens-shoes", label: "womens shoes", checked: false },
+      { value: "mens-shirts", label: "mens shirts", checked: false },
+      { value: "mens-shoes", label: "mens shoes", checked: false },
+      { value: "mens-watches", label: "mens watches", checked: false },
+      { value: "womens-watches", label: "womens watches", checked: false },
+      { value: "womens-bags", label: "womens bags", checked: false },
+      { value: "womens-jewellery", label: "womens jewellery", checked: false },
+      { value: "sunglasses", label: "sunglasses", checked: false },
+      { value: "automotive", label: "automotive", checked: false },
+      { value: "motorcycle", label: "motorcycle", checked: false },
+      { value: "lighting", label: "lighting", checked: false },
     ],
   },
 ];
@@ -56,24 +152,29 @@ export default function ProductList() {
   const dispatch = useDispatch();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const products = useSelector(selectAllProduct);
-  const [filter, setfilter] = useState({});
+  const [filter, setFilter] = useState({});
 
   useEffect(() => {
     dispatch(fetchAllProductAsync())
   },[dispatch])
 
-  const handleFilter = (e, section, option) => {
-    const newfilter = { ...filter, [section.id]: option.value };
-    setfilter(newfilter);
-    // console.log(newfilter);
-    dispatch(fetchAllProductByFilterAsync(newfilter));
-    console.log(section.id, option.value)
-  }
-
+const handleFilter = (e, section, option) => {
+  const newFilter = { ...filter, [section.id]: option.value };
+  setFilter(newFilter);
+  dispatch(fetchAllProductByFilterAsync(newFilter));
+  console.log(section.id, option.value);
+};
+  
+  
+   const handleSort = (e, option) => {
+     const newFilter = { ...filter, _sort: option.sort, _order: option.order };
+     setFilter(newFilter);
+     dispatch(fetchAllProductByFilterAsync(newFilter));
+   };
+  
   return (
     <div className="bg-white">
       <div>
-        {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -217,8 +318,9 @@ export default function ProductList() {
                       {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
                           {({ active }) => (
-                            <a
-                              href={option.thumbnail}
+                            <p
+                              onClick={(e) => handleSort(e, option)}
+                              // href={option.thumbnail}
                               className={classNames(
                                 option.current
                                   ? "font-medium text-gray-900"
@@ -228,7 +330,7 @@ export default function ProductList() {
                               )}
                             >
                               {option.name}
-                            </a>
+                            </p>
                           )}
                         </Menu.Item>
                       ))}
@@ -306,7 +408,9 @@ export default function ProductList() {
                                   defaultValue={option.value}
                                   type="checkbox"
                                   defaultChecked={option.checked}
-                                  onChange={e=>handleFilter(e,section,option, )}
+                                  onChange={(e) =>
+                                    handleFilter(e, section, option)
+                                  }
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
@@ -333,7 +437,10 @@ export default function ProductList() {
                       <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                         {products.map((product) => (
                           <Link to={"/ProductDetails"}>
-                            <div key={product.id} className="group relative border-solid border-2 p-2 border-gray-200">
+                            <div
+                              key={product.id}
+                              className="group relative border-solid border-2 p-2 border-gray-200"
+                            >
                               <div className="aspect-h-60 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
                                 <img
                                   src={product.thumbnail}
