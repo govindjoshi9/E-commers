@@ -153,25 +153,42 @@ export default function ProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const products = useSelector(selectAllProduct);
   const [filter, setFilter] = useState({});
+  const [sort, setSort] = useState({});
 
   useEffect(() => {
     dispatch(fetchAllProductAsync())
   },[dispatch])
 
-const handleFilter = (e, section, option) => {
-  const newFilter = { ...filter, [section.id]: option.value };
+  const handleFilter = (e, section, option) => {
+      console.log(e.target.checked);
+
+    const newFilter = {...filter}
+    if (e.target.checked) {
+      if (newFilter[section.id]) {
+        newFilter[section.id].push(option.value);
+      } else {
+        newFilter[section.id]=[option.value]
+      }
+    }
+    else {
+      const index = newFilter[section.id].findIndex(el => el === option.value);
+      newFilter[section.id].splice(index, 1);
+    }
+    console.log({newFilter})
   setFilter(newFilter);
-  dispatch(fetchAllProductByFilterAsync(newFilter));
-  console.log(section.id, option.value);
 };
   
   
    const handleSort = (e, option) => {
-     const newFilter = { ...filter, _sort: option.sort, _order: option.order };
-     setFilter(newFilter);
-     dispatch(fetchAllProductByFilterAsync(newFilter));
+     const sort = { _sort: option.sort, _order: option.order };
+     console.log({sort});
+     setFilter(sort);
+
    };
-  
+  useEffect(() => {
+      dispatch(fetchAllProductByFilterAsync({filter,sort}));
+
+  },[dispatch,filter,sort])
   return (
     <div className="bg-white">
       <div>
@@ -451,13 +468,13 @@ const handleFilter = (e, section, option) => {
                               <div className="mt-4 flex justify-between">
                                 <div>
                                   <h3 className="text-sm text-gray-700">
-                                    <a href={product.thumbnail}>
+                                    <div href={product.thumbnail}>
                                       <span
                                         aria-hidden="true"
                                         className="absolute inset-0"
                                       />
                                       {product.title}
-                                    </a>
+                                    </div>
                                   </h3>
                                   <p className="mt-1 text-sm text-gray-500">
                                     <StarIcon className="w-6 h-6 inline" />

@@ -1,12 +1,4 @@
-import React, { useState, Fragment } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import {
-  increment,
-  incrementAsync,
-  selectCount,
-} from './cartSlice';
-import { Dialog, Transition } from "@headlessui/react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const products = [
@@ -38,8 +30,7 @@ const products = [
 ];
 
 export default function  () {
-  // const count = useSelector(selectCount);
-  // const dispatch = useDispatch();
+
   const [open, setOpen] = useState(true);
 
 
