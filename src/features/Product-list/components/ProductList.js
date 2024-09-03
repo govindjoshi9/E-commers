@@ -154,6 +154,7 @@ export default function ProductList() {
   const products = useSelector(selectAllProduct);
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
+  // const [page, setPage] = useState({});
 
   useEffect(() => {
     dispatch(fetchAllProductAsync())
@@ -182,7 +183,7 @@ export default function ProductList() {
    const handleSort = (e, option) => {
      const sort = { _sort: option.sort, _order: option.order };
      console.log({sort});
-     setFilter(sort);
+     setSort(sort);
 
    };
   useEffect(() => {
